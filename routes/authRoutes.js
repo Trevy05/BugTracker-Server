@@ -25,7 +25,7 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(400).send({ message: "Invalid email or password" });
     }
-    const token = generateAccessToken({ id: user._id });
+    const token = generateAccessToken(user._id); // Pass the userId directly
 
     // Set the token as a cookie in the response
     res.cookie("token", token, { httpOnly: true });

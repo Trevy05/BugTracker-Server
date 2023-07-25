@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../schemas/userSchema");
-const { JWT_SECRET } = require("../config");
+require("dotenv").config();
+
+const jwtSecret = process.env.JWT_SECRET;
 
 function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -36,7 +38,8 @@ function createUser(user) {
 }
 
 function generateAccessToken(user) {
-  return jwt.sign(user, JWT_SECRET, { expiresIn: "1h" });
+  const payload = user.toString();
+  return jwt.sign(payload, jwtSecret);
 }
 
 module.exports = {
